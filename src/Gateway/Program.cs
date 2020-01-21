@@ -7,19 +7,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace Gateway
-{
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
+namespace Gateway {
+    public class Program {
+        public static void Main(string[] args) {
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
+                .ConfigureAppConfiguration((context, config) => {
+                    config.AddJsonFile("appsettings.json");
+                    config.AddJsonFile("ocelot.json");
+                })
+                .ConfigureWebHostDefaults(webBuilder => {
                     webBuilder.UseStartup<Startup>();
                 });
     }
